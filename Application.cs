@@ -14,7 +14,15 @@ namespace DBFistExercise2
 
         public void Run()
         {
-            using (var _db = new StudentContext())
+            var builder = new ConfigurationBuilder().AddJsonFile($"appsettings.json", true, true);
+            var config = builder.Build();
+
+            var connectionString = config.GetConnectionString("DefaultConnection");
+
+            var options = new DbContextOptionsBuilder<StudentContext>();
+            options.UseSqlServer(connectionString);
+
+            using (var _db = new StudentContext(options.Options))
             {
                 while (true)
                 {
