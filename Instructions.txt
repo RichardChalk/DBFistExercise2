@@ -1,0 +1,56 @@
+1. Skapa en databas
+
+USE [Student]
+GO
+/****** Object:  Table [dbo].[Kurs]    Script Date: 2020-11-10 07:46:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Kurs](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [namn] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Kurs] PRIMARY KEY CLUSTERED 
+(
+    [id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 2020-11-10 07:46:21 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [fornamn] [nvarchar](50) NULL,
+    [efternamn] [nvarchar](50) NULL,
+    [birthdate] [datetime] NULL,
+    [kurs_id] [int] NULL,
+ CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
+(
+    [id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Student] ON 
+GO
+INSERT [dbo].[Student] ([id], [fornamn], [efternamn], [birthdate], [kurs_id]) VALUES (2, N'a', N'b', CAST(N'1972-08-03T00:00:00.000' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Student] OFF
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD  CONSTRAINT [FK_Student_Kurs] FOREIGN KEY([kurs_id])
+REFERENCES [dbo].[Kurs] ([id])
+GO
+ALTER TABLE [dbo].[Student] CHECK CONSTRAINT [FK_Student_Kurs]
+GO
+USE [master]
+GO
+ALTER DATABASE [Student] SET  READ_WRITE 
+GO
+
+
+2. Scaffolda till kod och ett DBContext
+3. Skapa kod som gör insert på två kurs
+4. Skapa kod som gör insert på tre studenter
+5. Skapa kod som hämtar en student (by ID) och sätter kurs #1 för den studenten
