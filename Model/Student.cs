@@ -12,7 +12,6 @@ namespace DBFistExercise2.Model
         public string Efternamn { get; set; }
         public DateTime? Birthdate { get; set; }
         public int? KursId { get; set; }
-
         public virtual Kur Kurs { get; set; }
     }
 }

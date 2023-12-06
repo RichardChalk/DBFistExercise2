@@ -84,6 +84,10 @@ namespace DBFistExercise2
                         Console.WriteLine("Choose one of the course IDs above: ");
                         student.KursId = Convert.ToInt32(Console.ReadLine());
 
+                        student.Kurs = _db.Kurs
+                            .Where(k => k.Id == student.KursId)
+                            .FirstOrDefault();
+
                         _db.Add(student);
                         _db.SaveChanges();
                     }
