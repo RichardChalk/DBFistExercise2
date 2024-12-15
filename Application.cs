@@ -118,7 +118,7 @@ namespace DBFistExercise2
 
                         var foundStudent = _db.Students
                             .Where(s => s.Id == idToSearch)
-                            .Include(s => s.Kurs)
+                            .Include(s => s.Kurs) // Inkludera den relaterade Kurs-tabellen
                             .FirstOrDefault();
 
                         if (foundStudent == null)
