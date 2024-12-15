@@ -96,9 +96,14 @@ namespace DBFistExercise2
                     if (sel == 4)
                     {
                         Console.Clear();
-                        foreach (var student in _db.Students)
+                        var students = _db.Students
+                           .Include(s => s.Kurs) // Inkludera den relaterade Kurs-tabellen
+                           .ToList();
+                        foreach (var student in students)
                         {
                             Console.WriteLine($"Student name: {student.Fornamn} {student.Efternamn}");
+                            Console.WriteLine($"Student Kurs: {(student.Kurs != null ? student.Kurs.Namn : "Ingen kurs")}");
+                            Console.WriteLine("==============");
                         }
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadLine();
@@ -113,6 +118,7 @@ namespace DBFistExercise2
 
                         var foundStudent = _db.Students
                             .Where(s => s.Id == idToSearch)
+                            .Include(s => s.Kurs)
                             .FirstOrDefault();
 
                         if (foundStudent == null)
@@ -123,7 +129,8 @@ namespace DBFistExercise2
                             continue;
                         }
 
-                        Console.WriteLine($"Student Id: {foundStudent.Fornamn} {foundStudent.Efternamn}");
+                        Console.WriteLine($"Student Id {foundStudent.Id} :{foundStudent.Fornamn} {foundStudent.Efternamn}");
+                        Console.WriteLine($"Student Kurs: {foundStudent.Kurs.Namn}");
 
                         Console.WriteLine("Press any key to continue.");
                         Console.ReadLine();
